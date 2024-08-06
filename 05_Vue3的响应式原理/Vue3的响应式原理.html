@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //源数据
+        let person = {
+            name: '张三',
+            age: 18,
+        }
+
+        //模拟Vue2的实现响应式
+        //#region
+        /* let p = {}
+        Object.defineProperty(p, 'name', {
+            configurable: true, //可配置的，加了这个属性才能被删除
+            get() { //有人读取name时调用
+                console.log('get')
+                return person.name
+            }, //有人修改name时调用
+            set(newValue) {
+                console.log('set')
+                person.name = newValue
+            }
+        })
+        Object.defineProperty(p, 'age', {
+            get() { 
+                console.log('get')
+                return person.age
+            }, 
+            set(newValue) {
+                console.log('set')
+                person.age = newValue
+            }
+        }) */
+       //#endregion
+
+        //模拟Vue3的实现响应式
+        const p = new Proxy(person,{
+            //有人读取p的某个属性时调用
+            get(target,key) {
+                console.log(`有人读取了p身上的${key}属性`)
+                return Reflect.get(target,key)
+            },
+            //有人修改p的某个属性、或给p追加某个属性时调用
+            set(target,key,newValue) {
+                console.log(`有人修改了p身上的${key}属性，新的值为${newValue}`)
+                Reflect.set(target,key,newValue)
+            },
+            //有人删除p的某个属性时调用
+            deleteProperty(target,key) {
+                console.log(`有人删除了p身上的${key}属性`)
+                return Reflect.deleteProperty(target,key)
+            }
+        })
+
+        let obj = {a:1,b:2}
+        //通过Object.defineProperty去操作
+        /* Object.defineProperty(obj,'c',{
+            get() {
+                return 3
+            }
+        })
+        Object.defineProperty(obj,'c',{
+            get() {
+                return 4
+            }
+        }) */
+
+        //通过Reflect.defineProperty去操作
+        /* const x = Reflect.defineProperty(obj,'c',{
+            get() {
+                return 3
+            }
+        })
+        console.log(x);
+
+        const y = Reflect.defineProperty(obj,'c',{
+            get() {
+                return 4
+            }
+        })
+        if(y){
+            console.log('y成功了');
+        }else{
+            console.log('y失败了');
+        } */
+
+        console.log('@@@');
+        
+
+
+
+
+    </script>
+</body>
+</html>
