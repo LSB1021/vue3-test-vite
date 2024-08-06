@@ -1,14 +1,5 @@
 <template>
-  <Demo>
-    <template v-slot:qwe>
-      <span>lsb</span>
-    </template>
-    <template v-slot:asd>
-      <span>lsb</span>
-    </template>
-  </Demo>
-</template>
-
+  <Demo/>
 <script>
   import Demo from './components/Demo.vue';
   export default {
@@ -16,14 +7,5 @@
     components:{
       Demo
     },
-    setup(){
-      function showHelloMsg(value){
-        alert(`你好啊，你触发了hello事件，我收到的参数时：${value}`)
-      }
-
-      return{
-        showHelloMsg
-      }
-    }
   }
 </script>
